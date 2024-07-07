@@ -11,15 +11,11 @@ const app = express();
 const prisma = new PrismaClient();
 const port = process.env.PORT || 3000;
 
-app.use(
-  cors({
-    origin: "https://accredian-frontend-delta.vercel.app",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
-
-app.options("/referrals", cors());
+app.use(cors({
+  origin: "https://accredian-frontend-delta.vercel.app",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 app.use(bodyParser.json());
 
