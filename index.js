@@ -9,6 +9,14 @@ dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
+
+ datasources: {
+    db: {
+      url: process.env.DATABASE_URL, 
+    },
+  },
+});
+   
 const port = process.env.PORT || 3000;
 
 app.use(cors({
