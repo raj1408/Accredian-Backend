@@ -143,4 +143,6 @@ app.get("/referrals/:id", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  console.log("Database URL:", process.env.DATABASE_URL);
+
 });
