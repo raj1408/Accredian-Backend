@@ -11,19 +11,20 @@ const app = express();
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: env("DATABASE_URL")
- 
+      url: process.env.DATABASE_URL,
     },
   },
 });
 
 const port = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: "https://accredian-frontend-delta.vercel.app",
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"],
-}));
+app.use(
+  cors({
+    origin: "https://accredian-frontend-delta.vercel.app",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.use(bodyParser.json());
 
@@ -102,12 +103,12 @@ app.post("/referrals", validateReferral, async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error("Error sending email:", error);
+        res.status(500).json({ error: "Error sending email" });
       } else {
         console.log("Email sent:", info.response);
+        res.status(201).json(newReferral);
       }
     });
-
-    res.status(201).json(newReferral);
   } catch (error) {
     console.error("Error creating referral:", error);
     res.status(500).json({ error: "Internal Server Error" });
