@@ -8,7 +8,14 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
+
 const port = process.env.PORT || 3000;
 
 app.use(
@@ -18,8 +25,6 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
-
-app.options("/referrals", cors());
 
 app.use(bodyParser.json());
 
@@ -98,12 +103,12 @@ app.post("/referrals", validateReferral, async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error("Error sending email:", error);
+        res.status(500).json({ error: "Error sending email" });
       } else {
         console.log("Email sent:", info.response);
+        res.status(201).json(newReferral);
       }
     });
-
-    res.status(201).json(newReferral);
   } catch (error) {
     console.error("Error creating referral:", error);
     res.status(500).json({ error: "Internal Server Error" });

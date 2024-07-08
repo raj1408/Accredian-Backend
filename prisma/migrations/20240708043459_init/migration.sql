@@ -13,7 +13,6 @@ CREATE TABLE `Referral` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Referral_referrerEmail_key`(`referrerEmail`),
-    UNIQUE INDEX `Referral_refereeEmail_key`(`refereeEmail`),
     INDEX `Referral_referrerEmail_idx`(`referrerEmail`),
     INDEX `Referral_refereeEmail_idx`(`refereeEmail`),
     PRIMARY KEY (`id`)
