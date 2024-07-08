@@ -11,7 +11,8 @@ const app = express();
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL, 
+      url: env("DATABASE_URL")
+ 
     },
   },
 });
